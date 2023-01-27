@@ -13,6 +13,12 @@
 extern SPI_HandleTypeDef hspi2;
 
 #define TIM_COUNT_UP  0x00000000
+//Temperaturkoeffizient für NTC Thermistor
+#define B_Wert 3988
+//Referenzspannung
+#define Uref 2.7
+//Widerstand von R1
+#define R1 10000
 
 //Base Adresse von SysTick
 #define SYSTICK_BASEADDR   0xE000E010
