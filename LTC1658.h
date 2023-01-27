@@ -70,4 +70,76 @@ uint16_t LTC1658_ReadData();
  *******************************************************************/
 void TIM2_Init();
 
+
+
+/************************************************************************************************
+ * Diese Routine berechnet den Widerstand NTC Thermistor mit dem gegebener Temperatur.
+ * @param: temperatur, das ist temperatur vom NTC Thermistor (in °C)
+ * @return: das ist der Widerstandswert der zu der gegebene Temperatur passt.
+ *
+ * Hinweis
+ *	Temperatur in Kelvin = Temperatur in Celsius + 273,15
+ * Formel
+ *	RT = RN * EXP(B(1/T - 1/TN))
+ *	
+ *	RN – Widerstandswert bei Bezugstemperatur TN (meistens 25°C).
+ *	RT - Widerstandswert bei Temperatur T
+ *	B – Thermistorkonstante (Datenblatt) in Kelvin - Der wert liegt bei ca. 3988 Kelvin
+ ************************************************************************************************/
+float Widerstand_NTC( float temperatur);
+
+/************************************************************************************************
+ * Diese Routine berechnet anhang den Widerstand von NTC Thermistor die Spannung an dem Thermistor.
+ * @param: RT, Widerstand von NTC Thermistor bei der Temperatur T
+ * @return: die Spannung an den Thermistor.
+ *
+ * Hinweis
+ *	Es wird über ein Spannungsteiler berechnet.
+ 		      _______
+ 	 Uref <______|	 R1  |_______
+		      *******	   |
+		      	10KOhm	   |
+				   |
+				   ******** V
+				   |
+				   |
+				 __|__
+		     Thermistor	 |   | RT
+				 |___| 10KOhm bei 25°C
+				   |
+				   |
+				 
+ * Formel
+ *	UT = RT * (Uref/(R1 + RT))
+ *	
+ *	R1 – Widerstandswert von R1.
+ *	RT - Widerstandswert von Thermistor bei Temperatur T
+ *	Uref – Referenzspannung
+ *	UT - Spannungsabfall am Thermistor
+ ************************************************************************************************/
+float Spannung (float RT);
+
+/************************************************************************************************
+ * Diese Routine berechnet der 14Bit Digitalwert von Spannung anhang der Analog Spannungswert
+ * @param: U, Analog Spannungswert
+ * @return: der 14Bit digital Spannungswert.
+ *
+ * Hinweise
+ *	Es handelt sich um einen 14Bit ADC Berechnung
+ *
+ * Formel 
+ *	Digitalwert = (2^n - 1)/Referenzwert * Analogwert
+ *
+ *	n ist der Anzahl von bit (bei 14Bit, 2^14 - 1 = 16383)
+ *	Referenzwert ist der maximal Analogwert 
+ ************************************************************************************************/
+uint16_t U_digit( float U);
+
+/************************************************************************************************
+ * Diese Routine berechnet der 14Bit Digitalwert mit der gegebene Temperatur
+ * @param: temperatur in °C
+ * @return: der 14Bit digitalwert.
+ ************************************************************************************************/
+uint16_t getDigitBy(float temperatur);
+
 #endif /* LTC1658_LTC1658_H_ */
