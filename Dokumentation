@@ -54,5 +54,7 @@ R1 - 10K Widerstandswert
 Mit dem berechneter analog Spannung kann ein 14 Bit digital wert gerechnet werden.
 Der LTC1658 ist ein 14Bit DAC (digital analog converter).
 Der Spannungsabfall an dem Thermistor wird in einem 14Bit digital wert gerechnet und an LTC1658 über SPI Schnittstelle gesendet.
+Der empfangene digital wert über SPI wird durch LTC1658 (analog Wandler) in analog Spannung gewandelt (das ist der Sollwert) und mit
+dem Spannungsabfall an Thermistor (Iswert) verglichen.
 
 
