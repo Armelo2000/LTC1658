@@ -25,9 +25,9 @@ so sieht die Schaltung aus
 
  U = 2.7V
            *********
-   U <-----|	R1	 |-------|
-           *********		   |
-            10K			       |
+   U <-----|	R1 |-------|
+           *********	   |
+            10K		   |
                            |
                            |
                            **********> Vo
@@ -51,5 +51,8 @@ UT - Spannungsabfall an dem Thermistor
 RT - Widerstandswert von Thermistor bei der Temperatur T
 R1 - 10K Widerstandswert
 
-Mit dem berechneter analog Spannung kann der 14 Bit digital wert gerechnet werden.
-Der LTC1658 ist ein 14Bit DAC (digital analog converter)
+Mit dem berechneter analog Spannung kann ein 14 Bit digital wert gerechnet werden.
+Der LTC1658 ist ein 14Bit DAC (digital analog converter).
+Der Spannungsabfall an dem Thermistor wird in einem 14Bit digital wert gerechnet und an LTC1658 über SPI Schnittstelle gesendet.
+
+
