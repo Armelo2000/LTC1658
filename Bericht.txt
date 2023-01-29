@@ -1,0 +1,59 @@
+Dokumentation
+
+
+In diesem Projekt geht es darum über der digital Analog Wandler (LTC1658) der Spannungssollwert anhang der Temperatur zu erzeugen.
+Dieser Spannungssollwert wird über den Komperator mit dem Spannungsabfall an dem Thermistor (Iswert) verglichen. 
+Mit dem gesamten System soll eine eingegben Temperatur angehalten werden.
+
+Der Widerstandswert von Thermistor ändert sich mit dem Temperatur und das führt zur Änderung von Spannungsabfall an dem Thermistor.
+Dieser Widerstandswert wird mit dem folgenden Grundformel berechnet:
+
+RT = RN * EXP(B(1/T - 1/TN))
+
+RN – Widerstandswert bei Bezugstemperatur TN (meistens 25°C).
+
+RT - Widerstandswert bei Temperatur T
+
+B – Thermistorkonstante (Datenblatt) in Kelvin
+
+Quelle: http://www.controllersandpcs.de/lehrarchiv/pdfs/elektronik/pass01_03x.pdf 
+
+
+Mit dem gerechnete Widerstandswert kann der Spannungsabfall mit Hilfe von Spannungsteiler gerechnet werden.
+
+so sieht die Schaltung aus 
+
+ U = 2.7V
+           *********
+   U <-----|	R1   |-------|
+           *********	     |
+            10K		         |
+                           |
+                           |
+                           **********> Vo
+                           |
+                           |
+                           |
+                         |***|  |  Thermistor (RT)
+                      ___|___|__|
+                      |  |   |  -t° 
+                      |  *****   10KOhm bei 25°C
+                           |
+                           |
+                           |
+							 
+			
+Der Spannungsabfall an dem Thermistor ist nach dem Formel:
+
+	UT = RT * (U / (R1 + RT))
+	
+UT - Spannungsabfall an dem Thermistor
+RT - Widerstandswert von Thermistor bei der Temperatur T
+R1 - 10K Widerstandswert
+
+Mit dem berechneter analog Spannung kann ein 14 Bit digital wert gerechnet werden.
+Der LTC1658 ist ein 14Bit DAC (digital analog converter).
+Der Spannungsabfall an dem Thermistor wird in einem 14Bit digital wert gerechnet und an LTC1658 über SPI Schnittstelle gesendet.
+Der empfangene digital wert über SPI wird durch LTC1658 (analog Wandler) in analog Spannung gewandelt (das ist der Sollwert) und mit
+dem Spannungsabfall an Thermistor (Iswert) verglichen.
+
